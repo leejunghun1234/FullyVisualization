@@ -4,8 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three/examples/jsm/",
+                "chart.js": "https://cdn.jsdelivr.net/npm/chart.js/+esm"
+            }
+        }
+    </script>
 </head>
-<body>
-    <h2>hello</h2>
+<body oncontextmenu = "return false" ondragstart = "return false" ondragend = "return false">
+    <div id="root">
+        <div id="render-target"></div>
+        <div id="right-panel">
+            <h2>panel입니당</h2>
+        </div>
+        <div>
+            <button id="import-button"></button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { main } from './main.js';
+
+        const inputButton = document.getElementById("import-button");
+        let shapeLog;
+        let timeLog; 
+        inputButton.addEventListener('click', async () => {
+            try {
+                localStorage.setItem("reloadPending", "true");
+
+                const dirHandle = await window.showDirectoryPicker();
+                for await (const [name, handle] of dirHandle.entries()) {
+                    if (handle.kind === 'file' && name.endsWith('.json')) {
+                        const file = await handle.getFile();
+                        try {
+                            const json = await LoadJson(file);
+                            if (name.includes("shapeLogs")) {
+                                shapeLog = json;
+                            }
+                            if (name.includes("timeLogs")) {
+                                timeLog = json
+                            }
+                            console.log(`${name}`, json); // 콘솔에 실제 JSON 데이터 확인
+                        } catch (err) { }
+                    }
+                }
+                localStorage.setItem("shapeLog", JSON.stringify(shapeLog));
+                localStorage.setItem("timeLog", JSON.stringify(timeLog));
+                location.reload();
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        window.addEventListener("load", async () => {
+            if (localStorage.getItem("reloadPending") === "true") {
+                localStorage.removeItem("reloadPending");
+                shapeLog = JSON.parse(localStorage.getItem("shapeLog"));
+                timeLog = JSON.parse(localStorage.getItem("timeLog"));
+                main(shapeLog, timeLog);
+            }
+        });
+
+        if (shapeLog !== undefined && timeLog !== undefined) {
+            console.log(shapeLog);
+            console.log(timeLog);
+        }
+
+        async function LoadJson(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = (event) => {
+                    try {
+                        const json = JSON.parse(event.target.result);
+                        resolve(json);
+                    } catch (error) {
+                        reject(`❌ JSON 파싱 실패: ${file.name}`);
+                    }
+                };
+
+                reader.onerror = () => {
+                    reject(`❌ 파일 읽기 실패: ${file.name}`);
+                };
+
+                reader.readAsText(file);
+            });
+        }
+    </script>
 </body>
 </html>

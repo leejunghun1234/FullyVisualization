@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#root {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+#render-target {
+    width: calc(100% - 200px);
+    height: 100%;
+}
+
+#right-panel {
+    width: 200px;
+    height: 100%;
+}
