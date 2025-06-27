@@ -16,19 +16,53 @@
     </script>
 </head>
 <body oncontextmenu = "return false" ondragstart = "return false" ondragend = "return false">
-    <div id="root">
-        <div id="render-target"></div>
-        <div id="right-panel">
-            <h2>panel입니당</h2>
+    <div>
+        <div id="root">
+            <div id="render-target"></div>
+
+            <div id="right-panel">
+                <div id="cat-buttons">
+                    <button id="quant-button" class="cat-button">Quant Num</button>
+                    <button id="chart-button" class="cat-button">Quant chart</button>
+                    <button id="info-button" class="cat-button">Element Info</button>
+                </div>
+                <div id="cat-divs">
+                    <div class="info-target" id="info-target"></div>
+                </div>
+            </div>
+            <div id="down-panel">
+                <div id="slider-target">
+                    <button><</button>
+                    <input type="range" id="fully-slider" class="slider">
+                    <button>></button>
+                </div>
+                <div id="slider-buttons">
+                    <button><</button>
+                    <button>II</button>
+                    <button>></button>
+                    <button>>></button>
+                </div>
+            </div>
+            <div id="busan-panel">
+                <button class="busan-button">Full Screen</button>
+                <button class="busan-button">Full Screen</button>
+                <button class="busan-button">Full Screen</button>
+                <button class="busan-button">Full Screen</button>
+            </div>
         </div>
+
+        
+<!-- 
         <div>
             <button id="import-button"></button>
-        </div>
+        </div> -->
     </div>
+    
 
     <script type="module">
         import { main } from './main.js';
 
+        // 버튼 누르면 새로고침해서 다 초기화 한번 시키고 -> 폴더 선택해서 불러오기
         const inputButton = document.getElementById("import-button");
         let shapeLog;
         let timeLog; 
@@ -68,11 +102,6 @@
                 main(shapeLog, timeLog);
             }
         });
-
-        if (shapeLog !== undefined && timeLog !== undefined) {
-            console.log(shapeLog);
-            console.log(timeLog);
-        }
 
         async function LoadJson(file) {
             return new Promise((resolve, reject) => {
