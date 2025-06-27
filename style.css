@@ -134,8 +134,6 @@ html, body {
 .slider {
     -webkit-appearance: none;
     position: relative;
-    bottom: 10px;
-    left: 0;
     background: #ddd;
     width: 100%;
     height: 40px;
@@ -176,7 +174,6 @@ html, body {
     font-size: 20px;
     cursor: pointer;
     transition: background 0.3s ease, transform 0.1s ease;
-    margin-top: -20px;
 }
 
 #slider-target button:hover {
