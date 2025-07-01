@@ -26,10 +26,97 @@
                     <button id="chart-button" class="cat-button">Quant chart</button>
                     <button id="info-button" class="cat-button">Element Info</button>
                 </div>
-                <div id="cat-divs">
+                <div class="cat-divs"  id="info-divs">
                     <div class="info-target" id="info-target"></div>
                 </div>
+
+                <div class = "cat-divs hide" id = "chart-divs">
+                    <div class = "info-target" id = "info-target">
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Walls</h2>
+                            <canvas class = "graph-cat" id = "graph-wall"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Curtain Wall</h2>
+                            <canvas class = "graph-cat" id = "graph-curtainWall"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Floor</h2>
+                            <canvas class = "graph-cat" id = "graph-floor"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Ceiling</h2>
+                            <canvas class = "graph-cat" id = "graph-ceiling"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Column</h2>
+                            <canvas class = "graph-cat" id = "graph-column"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Structural Column</h2>
+                            <canvas class = "graph-cat" id = "graph-structuralColumn"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Stair</h2>
+                            <canvas class = "graph-cat" id = "graph-stair"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Railing</h2>
+                            <canvas class = "graph-cat" id = "graph-railing"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Windows</h2>
+                            <canvas class = "graph-cat" id = "graph-forwindow"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                        <div class = "graph-values">
+                            <h2 class = "graph-name">Doors</h2>
+                            <canvas class = "graph-cat" id = "graph-door"></canvas>
+                            <div class = "gapgap">
+                                <div class = "gapa">𖤂</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class= "cat-divs hide" id="element-divs">
+                    <div class="info-target"></div>
+                </div>
+
+                <div id="busan-panel">
+                    <button class="busan-button" id="import-button">Input Folder</button>
+                    <button class="busan-button">Full Screen</button>
+                    <button class="busan-button">Full Screen</button>
+                    <button class="busan-button">Full Screen</button>
+                </div>
             </div>
+
             <div id="down-panel">
                 <div id="slider-target">
                     <button><</button>
@@ -43,12 +130,8 @@
                     <button>>></button>
                 </div>
             </div>
-            <div id="busan-panel">
-                <button class="busan-button" id="import-button">Input Folder</button>
-                <button class="busan-button">Full Screen</button>
-                <button class="busan-button">Full Screen</button>
-                <button class="busan-button">Full Screen</button>
-            </div>
+
+            
         </div>
 
         
@@ -64,31 +147,81 @@
 
         // 버튼 누르면 새로고침해서 다 초기화 한번 시키고 -> 폴더 선택해서 불러오기
         const inputButton = document.getElementById("import-button");
-        let shapeLog;
-        let timeLog; 
+        let shapeLog, timeLog;
+        let wallQ, ctWallQ, floorQ, ceilingQ, columnQ, stColumnQ, stairQ, railingQ, windowQ, doorQ;
+
+        const csvTargets = {
+            "Walls_test": "wallQ",
+            "Curtain Walls_test": "ctWallQ",
+            "Floors_test": "floorQ",
+            "Ceilings_test": "ceilingQ",
+            "Columns_test": "columnQ",
+            "Structural Columns_test": "stColumnQ",
+            "Stairs_test": "stairQ",
+            "Railings_test": "railingQ",
+            "Windows_test": "windowQ",
+            "Doors_test": "doorQ"
+        };
+
+
         inputButton.addEventListener('click', async () => {
             try {
                 localStorage.setItem("reloadPending", "true");
 
                 const dirHandle = await window.showDirectoryPicker();
                 for await (const [name, handle] of dirHandle.entries()) {
-                    if (handle.kind === 'file' && name.endsWith('.json')) {
-                        const file = await handle.getFile();
+                    if (handle.kind !== 'file') continue;
+
+                    const file = await handle.getFile();
+
+                    // JSON 처리
+                    if (name.endsWith('.json')) {
                         try {
                             const json = await LoadJson(file);
-                            if (name.includes("shapeLogs")) {
-                                shapeLog = json;
-                            }
-                            if (name.includes("timeLogs")) {
-                                timeLog = json
-                            }
-                            console.log(`${name}`, json); // 콘솔에 실제 JSON 데이터 확인
-                        } catch (err) { }
+                            if (name.includes("shapeLogs")) shapeLog = json;
+                            if (name.includes("timeLogs")) timeLog = json;
+                        } catch (err) {
+                            console.error(`JSON 파싱 실패: ${name}`);
+                        }
+                    }
+
+                    // CSV 처리
+                    if (handle.kind === 'file' && name.endsWith('.csv')) {
+                        const file = await handle.getFile();
+                        if (name.includes("Walls_test")) {
+                            wallQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Curtain Walls_test")) {
+                            ctWallQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Floors_test")) {
+                            floorQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Ceilings_test")) {
+                            ceilingQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Columns_test")) {
+                            columnQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Structural Columns_test")) {
+                            stColumnQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Stairs_test")) {
+                            stairQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Railings_test")) {
+                            railingQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Windows_test")) {
+                            windowQ = await LoadCSV(file);
+                        }
+                        if (name.includes("Doors_test")) {
+                            doorQ = await LoadCSV(file);
+                        }
                     }
                 }
-                localStorage.setItem("shapeLog", JSON.stringify(shapeLog));
-                localStorage.setItem("timeLog", JSON.stringify(timeLog));
-                location.reload();
+                console.log(wallQ);
+                main(shapeLog, timeLog, wallQ, ctWallQ, floorQ, ceilingQ, columnQ, stColumnQ, stairQ, railingQ, windowQ, doorQ);
             } catch (err) {
                 console.error(err);
             }
@@ -97,9 +230,34 @@
         window.addEventListener("load", async () => {
             if (localStorage.getItem("reloadPending") === "true") {
                 localStorage.removeItem("reloadPending");
+
+                // JSON 로딩
                 shapeLog = JSON.parse(localStorage.getItem("shapeLog"));
                 timeLog = JSON.parse(localStorage.getItem("timeLog"));
-                main(shapeLog, timeLog);
+
+                // CSV 항목 로딩 대상 목록
+                const csvKeys = [
+                    "wallQ", "ctWallQ", "floorQ", "ceilingQ",
+                    "columnQ", "stColumnQ", "stairQ", "railingQ",
+                    "windowQ", "doorQ"
+                ];
+
+                for (const key of csvKeys) {
+                    const data = localStorage.getItem(key);
+                    if (data) {
+                        window[key] = JSON.parse(data);
+                    }
+                }
+
+                // 사용 후 localStorage 정리
+                localStorage.removeItem("shapeLog");
+                localStorage.removeItem("timeLog");
+                for (const key of csvKeys) {
+                    localStorage.removeItem(key);
+                }
+
+                // main 함수 호출 (필요한 데이터를 넣어주세요)
+                  // 필요한 경우 다른 Q도 전달
             }
         });
 
@@ -113,6 +271,33 @@
                         resolve(json);
                     } catch (error) {
                         reject(`❌ JSON 파싱 실패: ${file.name}`);
+                    }
+                };
+
+                reader.onerror = () => {
+                    reject(`❌ 파일 읽기 실패: ${file.name}`);
+                };
+
+                reader.readAsText(file);
+            });
+        }
+    
+        async function LoadCSV(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+
+                reader.onload = (event) => {
+                    try {
+                        const text = event.target.result;
+
+                        const rows = text
+                            .trim()
+                            .split("\n")
+                            .map(row => row.split(",").map(cell => cell.trim()));
+
+                        resolve(rows);
+                    } catch (error) {
+                        reject(`❌ CSV 파싱 실패: ${file.name}`);
                     }
                 };
 

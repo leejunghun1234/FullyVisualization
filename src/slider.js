@@ -17,6 +17,7 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
     }
 
     updateMeshes(currentTime);
+    updateInfos(currentTime);
 
     slider.addEventListener('input', () => {
         const currentIndex = parseInt(slider.value, 10);
@@ -35,6 +36,8 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
         for (const mm of allGroup) {
             mm.visible = false;
         }
+        console.log(timeJson);
+        console.log(currentTime);
         for (const timelog of timeJson[currentTime]["Elements"]) {
             const groups = meshDict[timelog];
             if (groups === undefined) continue;
@@ -70,6 +73,7 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
 
             list.id = `${catReplace}-list`;
             let importantInfo = document.createElement("div");
+            importantInfo.classList.add("main-quant-div");
             for (const quantityCatQuan of quantityCat) {
                 let value = timeJson[currentTime]["Quantity"][cat][quantityCatQuan];
                 if (quantityCatQuan === "All Volume"

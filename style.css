@@ -6,34 +6,35 @@ html, body {
 
 #root {
     display: grid;
-    grid-template-columns: 1fr 300px;
-    grid-template-rows: 1fr 200px;
+    grid-template-columns: 1fr 400px;
+    grid-template-rows: 1fr 250px;
     height: 100vh;
     width: 100vw;
     gap: 0;
+    background: beige;
 }
 
 #render-target {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
     background-color: #f0f0f0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 3em;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* 추천 */
+    position: relative;
 }
 
 #right-panel {
     grid-column: 2 / 3;
-    grid-row: 1 / 2;
+    grid-row: 1 / 3;
     background-color: #ccc;
     display: flex;
-    justify-content: flex-start;
-    position: relative;
     align-items: center;
     padding: 10px;
+    padding-bottom: 0px;
     flex-direction: column;
     font-size: 3em;
+    height: clac(100% - 0px);
 }
 
 #down-panel {
@@ -48,8 +49,8 @@ html, body {
 }
 
 #busan-panel {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    height: 250px;
+    width: 400px;
     background-color: antiquewhite;
     justify-content: center;
     align-items: center;
@@ -68,6 +69,7 @@ html, body {
 */
 
 #cat-buttons {
+    width: 340px;
     justify-content: center;
     display: flex;
     margin-top: 15px;
@@ -93,10 +95,122 @@ html, body {
     transform: translateY(-2px);
 }
 
-#cat-divs {
-    height: 100%;
-    width: 100%;
+.cat-divs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
     background-color: beige;
+    height: 40%;
+    margin-bottom: 30px;
+    border-radius: 15px;
+}
+
+.cat-divs.hide {
+    display: none
+}
+
+#info-target {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;                 /* ✅ flex + column이면 내부 요소도 잘 쌓임 */
+    flex-direction: column;
+    scroll-behavior: smooth;
+    font-size: 16px;
+    width: 100%;
+    padding: 8px;
+    height: 10px;
+    border-radius: 15px;
+}
+
+.category-name-container {
+    justify-items: center;
+}
+
+.category-title {
+    font-weight: bold;
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+.main-quant-div {
+    justify-items: center
+}
+
+.main-quant {
+    justify-items: center;
+}
+
+.category-list {
+    max-height: 10000px;
+    width: 95%;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 0px;
+    font-family: sans-serif;
+    outline: none;
+    border: none;
+}
+
+.category-list.hide {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.1s ease;
+}
+
+.main-value {
+    font-weight: bold;
+}
+
+.value123 {
+    font-weight: bold;
+}
+
+.graph-target {
+    width: 100%;
+    height: 98%;
+    overflow-y: auto;
+    background: #ffffff00;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.graph-cat {
+    width: 95%;  /* 부모 크기 맞춤 */
+    height: 300px; /* 고정 높이 */
+    background-color: white;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: -10px; /* 그래프 간 간격 추가 */
+    display: block;
+}
+
+.graph-name {
+    font-size: 20px; /* 글자 크기 */
+    font-weight: bold; /* 볼드체 */
+    color: #333; /* 어두운 회색 */
+    margin-top: 5px; /* 위쪽 여백 */
+    margin-bottom: 1px; /* 아래쪽 여백 */
+    padding-bottom: 5px;
+}
+
+.graph-values {
+    width: 93%;  /* 부모 크기 맞춤 */
+    height: auto; /* 고정 높이 */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 10px; /* 그래프 간 간격 추가 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gapa {
+    margin-top: 10px;
 }
 
 /* 
@@ -231,13 +345,15 @@ html, body {
 
 
 .busan-button {
-    width: calc(100% - 40px);
+    /* width: calc(100% - 40px); */
+    width: 350px;
     height: calc(100% - 170px);
     color: white;
     background-color: #45a049;
     font-weight: bold;
     outline: none;
     border: none;
+    margin: 6px;
     border-radius: 20px;
 }
 
