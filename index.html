@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Fully Visualization</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="./하마4.png">
     <script type="importmap">
         {
             "imports": {
@@ -106,7 +107,7 @@
                 </div>
 
                 <div class= "cat-divs hide" id="element-divs">
-                    <div class="info-target"></div>
+                    <div class="info-target" id="element-target"></div>
                 </div>
 
                 <div id="busan-panel">
@@ -119,15 +120,16 @@
 
             <div id="down-panel">
                 <div id="slider-target">
-                    <button><</button>
+                    <button id="decrease-1" class="inorde"><</button>
                     <input type="range" id="fully-slider" class="slider">
-                    <button>></button>
+                    <button id="increase-1" class="inorde">></button>
+                    <button id="time-button">TIME</button>
                 </div>
                 <div id="slider-buttons">
-                    <button><</button>
-                    <button>II</button>
-                    <button>></button>
-                    <button>>></button>
+                    <button id="rewind"><</button>
+                    <button id="pause">II</button>
+                    <button id="play">></button>
+                    <button id="fast-forward">>></button>
                 </div>
             </div>
 
@@ -141,6 +143,21 @@
         </div> -->
     </div>
     
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="dateTimeModal">
+        <div class="modal-content">
+            <h3 id = "modal-head">날짜 & 시간 선택</h3>
+            <div id = "input-container">
+                <input type="date" id="dateInput">
+                <input type="time" id="timeInput">
+            </div>
+            
+            <div id = "close-container">
+                <button id = "okay-button" class="f close-btn">확인</button>
+                <button id = "cancel-button" class="f close-btn">취소</button>
+            </div>
+        </div>
+    </div>
 
     <script type="module">
         import { main } from './main.js';

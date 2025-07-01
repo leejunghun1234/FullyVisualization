@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export function clickEvent(renderer, camera, allGroup, scene) {
+export function clickEvent(renderer, camera, allGroup) {
     const raycaster = new THREE.Raycaster();
     let selectedObject = undefined;
     const parentKeies = ["Common", "Geometry", "Layers", "Property", "Parameter", "comment"];
@@ -10,6 +10,14 @@ export function clickEvent(renderer, camera, allGroup, scene) {
     function onMouseDown(event) {
         if (event.button === 0) {
             const rect = renderer.domElement.getBoundingClientRect();
+            const outside =
+                event.clientX < rect.left  ||
+                event.clientX > rect.right ||
+                event.clientY < rect.top   ||
+                event.clientY > rect.bottom;
+
+            if (outside) return;   // ← 여기서 함수 종료
+            
             const mouse = new THREE.Vector2(
                 ((event.clientX - rect.left) / rect.width) * 2 - 1,
                 -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -114,7 +122,7 @@ export function clickEvent(renderer, camera, allGroup, scene) {
             }
         }
         if (depth === 1) {
-            html += `<div class="json-content-${depth} hide" id="json-content-${parentKey}">`;
+            html += `<div class="json-content-${depth}" id="json-content-${parentKey}">`;
 
         } else {
             html += `<div class="json-content-${depth}">`;

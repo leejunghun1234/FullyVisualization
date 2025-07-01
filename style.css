@@ -7,7 +7,7 @@ html, body {
 #root {
     display: grid;
     grid-template-columns: 1fr 400px;
-    grid-template-rows: 1fr 250px;
+    grid-template-rows: 1fr 180px;
     height: 100vh;
     width: 100vw;
     gap: 0;
@@ -49,7 +49,7 @@ html, body {
 }
 
 #busan-panel {
-    height: 250px;
+    height: 180px;
     width: 400px;
     background-color: antiquewhite;
     justify-content: center;
@@ -58,7 +58,6 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
 }
 
 /* 
@@ -110,7 +109,7 @@ html, body {
     display: none
 }
 
-#info-target {
+.info-target {
     flex: 1;
     overflow-y: auto;
     display: flex;                 /* ✅ flex + column이면 내부 요소도 잘 쌓임 */
@@ -131,6 +130,28 @@ html, body {
     font-weight: bold;
     font-size: 30px;
     margin-top: 50px;
+}
+
+.category-button {
+    margin: auto;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: white;
+    width: 100px;
+    background-color: #45a049;
+    box-shadow: none;
+    outline: none;
+    border: none;
+}
+
+.category-button:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
 }
 
 .main-quant-div {
@@ -179,7 +200,7 @@ html, body {
 
 .graph-cat {
     width: 95%;  /* 부모 크기 맞춤 */
-    height: 300px; /* 고정 높이 */
+    height: 280px; /* 고정 높이 */
     background-color: white;
     border-radius: 10px;
     padding: 4px;
@@ -197,21 +218,162 @@ html, body {
 }
 
 .graph-values {
-    width: 93%;  /* 부모 크기 맞춤 */
-    height: auto; /* 고정 높이 */
+    width: 100%;  /* 부모 크기 맞춤 */
+    height: 350px; /* 고정 높이 */
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 10px;
+    padding-bottom: 30px;
     margin-bottom: 10px; /* 그래프 간 간격 추가 */
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.gapgap {
+    position: relative;
+    margin-top: 3px;
+    width: 280px;
+    height: 10px;
+}
+
 .gapa {
     margin-top: 10px;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 0%;
+    color: black;
 }
+
+
+
+
+#element-target {
+    align-items: center;
+    text-align: center;
+}
+
+.json-content-1 {
+    max-height: 10000px;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+}
+
+
+.json-content-1.hide {
+    max-height: 0px;
+    transition: max-height 0.6s ease;
+}
+
+.category-container {
+    margin: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: #f1faf0;
+}
+
+.json-section-1 {
+    margin: 10px;
+    margin-bottom: 10px;
+    padding: 8px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: #f1faf0;
+}
+
+
+.json-section-2 {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: #e0f5e0;
+}
+
+.json-section-3 {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: #c9ebc9;
+}
+
+.json-section-4 {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: 	#b0e1b0;
+}
+
+.json-section-5 {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    word-break: break-word;
+    background-color: #99d699;
+}
+
+
+.json-header {
+    font-weight: bold;
+    color: #0066cc;
+    font-size: 12px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.json-array-index {
+    font-size: 20px;
+}
+
+.json-key-1 {
+    font-size: 30px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+.json-key-2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.json-key-3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.json-key-4 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.json-key-5 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.json-value {
+    margin-left: auto;
+    font-size: 16px;
+    color: #333;
+}
+
 
 /* 
 88""Yb 88  dP""b8 88  88 888888     88""Yb    db    88b 88 888888 88     .dP"Y8     888888 88b 88 8888b.  
@@ -232,7 +394,7 @@ html, body {
 
 #slider-target {
     position: relative;
-    width: calc(100% - 100px);
+    width: calc(100% - 50px);
     height: 80px;
     background-color: transparent;
     justify-content: center;
@@ -240,8 +402,8 @@ html, body {
     display: flex;
     gap: 10px;
     margin-top: -0px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
 
 }
 
@@ -278,7 +440,9 @@ html, body {
     background: #263238;
 }
 
-#slider-target button {
+
+
+.inorde {
     width: 50px;
     height: 50px;
     border-radius: 8px;
@@ -290,6 +454,18 @@ html, body {
     transition: background 0.3s ease, transform 0.1s ease;
 }
 
+#time-button {
+    width: 300px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    background-color: #45a049;
+    border: none;
+}
+
 #slider-target button:hover {
     background-color: #2e7d32;
     transform: translateY(-2px);
@@ -298,7 +474,7 @@ html, body {
 #slider-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 0 10px;
     height: 50px;
     margin-top: 20px;
 }
@@ -347,13 +523,13 @@ html, body {
 .busan-button {
     /* width: calc(100% - 40px); */
     width: 350px;
-    height: calc(100% - 170px);
+    height: calc(100%);
     color: white;
     background-color: #45a049;
     font-weight: bold;
     outline: none;
     border: none;
-    margin: 6px;
+    margin: 5px 5px;
     border-radius: 20px;
 }
 
@@ -369,4 +545,147 @@ html, body {
 88""Yb Y8   8P o.`Y8b  dP__Yb  88 Y88     88"""   dP__Yb  88 Y88 88""   88  .o     88""   88 Y88  8I  dY 
 88oodP `YbodP' 8bodP' dP""""Yb 88  Y8     88     dP""""Yb 88  Y8 888888 88ood8     888888 88  Y8 8888Y"   */
 
+/* 모달 스타일 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    justify-content: center;
+    align-items: center;
 
+    backdrop-filter: blur(5px); /* 배경 흐리게 */
+    z-index: 1002;
+
+    padding: 20px;
+    gap: 55px;
+}
+#modal-head {
+    gap: 1px;
+    padding: 1px;
+    border: 1px;
+    margin: 1px;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 320px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    opacity: 1;
+}
+
+/* 닫기 버튼 스타일 */
+.close-btn {
+    background: #45a049;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    gap: 5px;
+    width: 100px;
+    padding: 5px;
+}
+
+
+
+.close-btn:hover {
+    background-color: #388e3c;
+    transform: translateY(-2px);
+}
+
+/* 모달이 열리면 버튼이나 인터페이스 요소 클릭 차단 */
+.disable-interaction {
+    pointer-events: none; /* 클릭 이벤트 차단 */
+    user-select: none; /* 텍스트 선택 차단 */
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;  /* 날짜 & 시간 입력 필드 간격 */
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;  /* 입력 필드와 버튼 사이 여백 */
+    width: 90%;
+}
+
+/* 입력 필드 스타일 */
+.input-container input {
+    padding: 10px;
+    width: 90%;  /* 입력 필드 넓이를 컨테이너에 맞춤 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    display: block;
+}
+
+/* 버튼 컨테이너 */
+.close-container {
+    display: flex;
+    justify-content: space-between;  /* 버튼 사이 여백 */
+    gap: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+section ul {
+    display: inline-block;       /* 가운데 정렬을 위해 block처럼 배치 */
+    text-align: left;            /* 목록 안의 글자는 왼쪽 정렬 유지 */
+    margin: auto;
+    padding: 0;
+    padding-left: 1em;
+    list-style-position: inside; /* 목록 점 위치를 안쪽으로 */
+}
+
+.key123 {
+    list-style-position: inside;
+}
