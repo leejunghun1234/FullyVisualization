@@ -61,11 +61,10 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
         for (const mm of allGroup) {
             mm.visible = false;
         }
-        console.log(timeJson);
-        console.log(currentTime);
         for (const timelog of timeJson[currentTime]["Elements"]) {
             const groups = meshDict[timelog];
             if (groups === undefined) continue;
+            if (groups.userData.visible === false) continue;
             groups.visible = true;
         }
     }
@@ -73,7 +72,7 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
     function updateInfos(currentTime) {
         const timeKeysLength = timeKeys.length - 1;
         const currentTimeLength = (slider.value / timeKeysLength) * 100;
-        console.log(currentTimeLength);
+
         arrows.forEach((arrow) => {
             arrow.style.left = `${currentTimeLength}%`;
         });
@@ -194,7 +193,6 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
         sliderInterval = setInterval(() => {
             let currentValue = parseInt(slider.value);
             if (currentValue > 0) {
-                console.log(playbackSpeed);
                 updateSlider(currentValue - playbackSpeed);
             } else {
                 clearInterval(sliderInterval);
@@ -220,6 +218,7 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
         const val = (slider.value - min) / (max - min) * 100;
         slider.style.background = `linear-gradient(to right, #263238 0%, #45a049 ${val}%, #ddd ${val}%, #ddd 100%)`;
     }
+
     sliderFully.addEventListener("input", () => updateSliderBackground(sliderFully));
     updateSliderBackground(sliderFully);
     
@@ -269,8 +268,6 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
 
         const dateMatch = b[0].split("/");
         const timeMatch = b[1].split(":");
-        console.log(dateMatch);
-        console.log(timeMatch);
     
         const day = dateMatch[0];
         const month = dateMatch[1].padStart(2, '0');
@@ -285,12 +282,13 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
     
         dateInput.value = dateText;
         timeInput.value = timeText;
-    })
+    });
     display.addEventListener('click', openModal);
 
     cancelBtn.addEventListener('click', () => {
         closeModal();
     });
+
     okayBtn.addEventListener('click', () => {
         closeModal();
         if (dateInput != undefined && timeInput != undefined){
@@ -308,11 +306,12 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
 
             display.textContent = `${formattedDate}`;
             updateMeshes(closestTimestamp);
-            updatesInfos(closestTimestamp);
+            updateInfos(closestTimestamp);
             makeCategoryList(true, buttonState);
         }
         
     });
+
     modal.addEventListener("mousedown", (event) => {
         if (event.target === modal) { // 모달 바깥 클릭 감지
             closeModal();
@@ -343,7 +342,6 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
 
     function parseTimestamp(timestamp) {
         const formatted = timestamp.replace(/_/g, "-"); // 2025-02-08-18-02-59
-        console.log(formatted);
         const parts = formatted.split("-"); // 배열로 변환
     
         // Date 객체로 변환 (년, 월-1, 일, 시, 분, 초)
@@ -367,7 +365,48 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
     
         return closest;
     }
+
+    
+    const categoryButtons = {
+        "wall-select": {"category": "Walls", "visible": true },
+        "curtainWall-select": {"category": "Curtain Walls", "visible": true },
+        "floor-select": {"category": "Floors", "visible": true },
+        "ceiling-select": {"category": "Ceilings", "visible": true },
+        "column-select": {"category": "Columns", "visible": true },
+        "structuralColumn-select": {"category": "Structural Columns", "visible": true },
+        "stair-select": {"category": "Stairs", "visible": true },
+        "railing-select": {"category": "Railings", "visible": true },
+        "window-select": {"category": "Windows", "visible": true },
+        "door-select": {"category": "Doors", "visible": true }
+    };
+    Object.keys(categoryButtons).forEach(ButtonId => {
+        const button = document.getElementById(ButtonId);
+        button.addEventListener('click', () => {
+            if (categoryButtons[ButtonId]["visible"] === true) {
+                button.style.backgroundColor = "#263238";
+                categoryButtons[ButtonId]["visible"] = false;
+                for (const i of allGroup) {
+                    console.log(i);
+                    if (i.userData.Common.ElementCategory == categoryButtons[ButtonId]["category"]) {
+                        i.userData.visible = false;
+                    }
+                }
+            }
+            else {
+                button.style.backgroundColor = "#45a049";
+                categoryButtons[ButtonId]["visible"] = true;
+                for (const i of allGroup) {
+                    if (i.userData.Common.ElementCategory == categoryButtons[ButtonId]["category"]) {
+                        i.userData.visible = true;
+                    }
+                }
+            }
+            updateMeshes(currentTime);
+        });
+    });
 }
+
+
 
 function makeCategoryList(buttonState) {
     let getButton = {

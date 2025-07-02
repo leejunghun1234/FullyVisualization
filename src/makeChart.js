@@ -138,6 +138,5 @@ export function MakeChart(timeKeys, quant, canvasId) {
         }
     });
     
-    console.log(chart1);
     return { chart1, myCanvas };
 }

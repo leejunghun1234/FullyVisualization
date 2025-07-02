@@ -17,7 +17,7 @@ export function clickEvent(renderer, camera, allGroup) {
                 event.clientY > rect.bottom;
 
             if (outside) return;   // ← 여기서 함수 종료
-            
+
             const mouse = new THREE.Vector2(
                 ((event.clientX - rect.left) / rect.width) * 2 - 1,
                 -((event.clientY - rect.top) / rect.height) * 2 + 1
@@ -68,8 +68,7 @@ export function clickEvent(renderer, camera, allGroup) {
                     if (meshInfo) {
                         UpdateElementInfo(meshInfo);
                         for (const parentKey of parentKeies) {
-                            const section = document.getElementById(`json-content-${parentKey}`)
-                            console.log(section);
+                            const section = document.getElementById(`json-content-${parentKey}`);
                         }
                     }
                 } else {
@@ -98,7 +97,7 @@ export function clickEvent(renderer, camera, allGroup) {
 
     function generateHTMLFromJSON(json, parentKey = "", depth = 0) {
         let html = ``;
-        console.log(depth);
+        
         if (depth != 0) {
             if (parentKey === "Common" ||
                 parentKey === "Geometry" ||
