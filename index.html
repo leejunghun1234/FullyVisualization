@@ -114,7 +114,7 @@
                     <button class="busan-button" id="import-button">Input Folder</button>
                     <button class="busan-button">Full Screen</button>
                     <button class="busan-button">Full Screen</button>
-                    <button class="busan-button">Full Screen</button>
+                    <button class="busan-button" onclick="window.location.href='https://leejunghun1234.github.io/'">GO Main</button>
                 </div>
             </div>
 
@@ -248,39 +248,6 @@
             }
         });
 
-        window.addEventListener("load", async () => {
-            if (localStorage.getItem("reloadPending") === "true") {
-                localStorage.removeItem("reloadPending");
-
-                // JSON 로딩
-                shapeLog = JSON.parse(localStorage.getItem("shapeLog"));
-                timeLog = JSON.parse(localStorage.getItem("timeLog"));
-
-                // CSV 항목 로딩 대상 목록
-                const csvKeys = [
-                    "wallQ", "ctWallQ", "floorQ", "ceilingQ",
-                    "columnQ", "stColumnQ", "stairQ", "railingQ",
-                    "windowQ", "doorQ"
-                ];
-
-                for (const key of csvKeys) {
-                    const data = localStorage.getItem(key);
-                    if (data) {
-                        window[key] = JSON.parse(data);
-                    }
-                }
-
-                // 사용 후 localStorage 정리
-                localStorage.removeItem("shapeLog");
-                localStorage.removeItem("timeLog");
-                for (const key of csvKeys) {
-                    localStorage.removeItem(key);
-                }
-
-                // main 함수 호출 (필요한 데이터를 넣어주세요)
-                  // 필요한 경우 다른 Q도 전달
-            }
-        });
 
         async function LoadJson(file) {
             return new Promise((resolve, reject) => {
