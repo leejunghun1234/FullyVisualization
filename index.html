@@ -113,7 +113,7 @@
                 <div id="busan-panel">
                     <button class="busan-button" id="import-button">Input Folder</button>
                     <button class="busan-button">Full Screen</button>
-                    <button class="busan-button">Full Screen</button>
+                    <button class="busan-button" id="export-button">Export Visible Elem</button>
                     <button class="busan-button" onclick="window.location.href='https://leejunghun1234.github.io/'">GO Main</button>
                 </div>
             </div>
@@ -199,8 +199,8 @@
                     if (name.endsWith('.json')) {
                         try {
                             const json = await LoadJson(file);
-                            if (name.includes("shapeLogs")) shapeLog = json;
-                            if (name.includes("timeLogs")) timeLog = json;
+                            if (name.includes("SL")) shapeLog = json;
+                            if (name.includes("TL")) timeLog = json;
                         } catch (err) {
                             console.error(`JSON 파싱 실패: ${name}`);
                         }

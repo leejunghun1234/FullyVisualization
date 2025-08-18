@@ -112,6 +112,28 @@ export function main(
     clickEvent(renderer, camera, allGroup);
     rightPanelButtonClick();
 
+    const exportButton = document.getElementById("export-button");
+    exportButton.addEventListener('click', () => {
+        const visibleElem = []
+        for (const i of allGroup) {
+            if (i.visible == true) {
+                visibleElem.push(i.name)
+            }
+        }
+
+        const jsonStr = JSON.stringify(visibleElem, null, 2);
+
+        const blob = new Blob([jsonStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "export.json";  // 다운로드 파일명
+        link.click();
+
+        URL.revokeObjectURL(url);
+    });
+
     // animate 실행
     animate();
 
