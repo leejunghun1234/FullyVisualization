@@ -115,13 +115,52 @@ export function main(
     const exportButton = document.getElementById("export-button");
     exportButton.addEventListener('click', () => {
         const visibleElem = []
+        const answer = {
+            "Wall": [], "Curtain Wall": [], "Floor": [], "Ceiling": [], "Column": [],
+            "Structural Column": [], "Window": [], "Door": [], "Railing": [],
+            "Stair": [], "Furniture": [], "Roof": [], "All": []
+        };
+
         for (const i of allGroup) {
             if (i.visible == true) {
-                visibleElem.push(i.name)
+                const elemid = i.userData.Common.ElementId;
+                const id = elemid.split("_")[0];
+                const cat = i.userData.Common.ElementCategory;
+
+                answer["All"].push(id)
+
+                if (cat === "Walls") {
+                    answer["Wall"].push(id);
+                } else if (cat === "Curtain Walls") {
+                    answer["Curtain Wall"].push(id);
+                } else if (cat === "Floors") {
+                    answer["Floor"].push(id);
+                } else if (cat === "Ceilings") {
+                    answer["Ceiling"].push(id);
+                } else if (cat === "Roofs") {
+                    answer["Roof"].push(id);
+                } else if (cat === "Columns") {
+                    answer["Column"].push(id);
+                } else if (cat === "Structural Columns") {
+                    answer["Structural Column"].push(id);
+                } else if (cat === "Windows") {
+                    answer["Window"].push(id);
+                } else if (cat === "Doors") {
+                    answer["Door"].push(id);
+                } else if (cat === "Railings") {
+                    answer["Railing"].push(id);
+                } else if (cat === "Stairs") {
+                    answer["Stair"].push(id);
+                } else if (cat === "Furniture") {
+                    answer["Furniture"].push(id);
+                } else {
+                    console.log(cat);
+                    continue;
+                }
             }
         }
-
-        const jsonStr = JSON.stringify(visibleElem, null, 2);
+        
+        const jsonStr = JSON.stringify(answer, null, 2);
 
         const blob = new Blob([jsonStr], { type: "application/json" });
         const url = URL.createObjectURL(blob);
