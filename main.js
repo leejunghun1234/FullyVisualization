@@ -124,7 +124,8 @@ export function main(
         for (const i of allGroup) {
             if (i.visible == true) {
                 const elemid = i.userData.Common.ElementId;
-                const id = elemid.split("_")[0];
+                const id = elemid // elemid.split("_")[0];
+                console.log(id);
                 const cat = i.userData.Common.ElementCategory;
 
                 answer["All"].push(id)
