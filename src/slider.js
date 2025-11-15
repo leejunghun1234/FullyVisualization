@@ -62,6 +62,7 @@ export function sliderControls(sliderName, timeKeys, timeJson, allGroup, meshDic
             mm.visible = false;
         }
         for (const timelog of timeJson[currentTime]["Elements"]) {
+            console.log(timeJson[currentTime]);
             const groups = meshDict[timelog];
             if (groups === undefined) continue;
             if (groups.userData.visible === false) continue;

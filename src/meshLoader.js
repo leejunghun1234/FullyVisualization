@@ -5,7 +5,7 @@ export function loadMeshes(jsonData, scene, scaleFactor = 0.5) {
     const meshInfoDict = {};
     const allMesh = [];
     const allGroup = [];
-    console.log(jsonData)
+
     for (const meshes of jsonData) {
         if (meshes.CommandType == "D") continue;
         const meshInfo = meshes.Info;
@@ -53,7 +53,7 @@ export function loadMeshes(jsonData, scene, scaleFactor = 0.5) {
         }
         scene.add(meshGroup);
         meshGroup.userData = meshes.Info;
-        meshGroup.visible = false;
+        meshGroup.visible = true;
         meshGroup.name = elementId;
 
         meshDict[elementId] = meshGroup;
